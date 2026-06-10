@@ -1,18 +1,9 @@
-"""
-accounts/models.py — Mở rộng User với UserProfile.
-"""
-
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
 
 
 class UserProfile(models.Model):
-    """
-    Profile mở rộng của User.
-    Lưu cấu hình cá nhân (màu nền, font size...) dưới dạng JSONField.
-    """
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(
         User,

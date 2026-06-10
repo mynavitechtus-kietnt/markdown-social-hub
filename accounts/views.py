@@ -1,7 +1,3 @@
-"""
-accounts/views.py — Views xác thực và quản lý hồ sơ người dùng.
-"""
-
 import logging
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
