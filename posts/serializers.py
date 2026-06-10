@@ -8,7 +8,7 @@ class TagSerializer(serializers.ModelSerializer):
     post_count = serializers.SerializerMethodField()
 
     def get_post_count(self, obj):
-        return obj.posts.filter(status=Post.Status.PUBLISHED).count()
+        return obj.posts.filter(status=Post.Status.PUBLISH).count()
 
     def validate_name(self, value):
         if len(value.strip()) < 2:
@@ -78,7 +78,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
         return value
 
     def validate_status(self, value):
-        if value not in [Post.Status.DRAFT, Post.Status.PUBLISHED]:
+        if value not in [Post.Status.DRAFT, Post.Status.PUBLISH]:
             raise serializers.ValidationError(
                 f"Trạng thái không hợp lệ. Chỉ chấp nhận: {[s.value for s in Post.Status]}"
             )
