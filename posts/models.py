@@ -23,7 +23,7 @@ class Post(models.Model):
 
     class Status(models.TextChoices):
         DRAFT = "draft", "Bản nháp"
-        PUBLISHED = "published", "Đã xuất bản"
+        PUBLISH = "published", "Đã xuất bản"
         ARCHIVED = "archived", "Lưu trữ"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

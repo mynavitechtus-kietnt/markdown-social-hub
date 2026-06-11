@@ -72,7 +72,7 @@ class PostViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve" and user.is_authenticated:
             return Post.objects.select_related("author").prefetch_related(
                 "tags", "comments"
-            ).filter(status=Post.Status.PUBLISHED) | Post.objects.select_related(
+            ).filter(status=Post.Status.PUBLISH) | Post.objects.select_related(
                 "author"
             ).prefetch_related(
                 "tags", "comments"
@@ -84,7 +84,7 @@ class PostViewSet(viewsets.ModelViewSet):
         queryset = (
             Post.objects.select_related("author")
             .prefetch_related("tags", "comments")
-            .filter(status=Post.Status.PUBLISHED)
+            .filter(status=Post.Status.PUBLISH)
         )
 
         # --- Filters ---
@@ -128,7 +128,7 @@ class PostViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset()
 
         status_filter = request.query_params.get("status")
-        if status_filter in [Post.Status.DRAFT, Post.Status.PUBLISHED]:
+        if status_filter in [Post.Status.DRAFT, Post.Status.PUBLISH]:
             queryset = queryset.filter(status=status_filter)
 
         page = self.paginate_queryset(queryset)
@@ -148,9 +148,9 @@ class PostViewSet(viewsets.ModelViewSet):
     def publish(self, request, pk=None):
         """POST /api/posts/{id}/publish/ — Đổi trạng thái sang Publish."""
         post = self.get_object()
-        if post.status == Post.Status.PUBLISHED:
+        if post.status == Post.Status.PUBLISH:
             return Response({"message": "Bài viết đã ở trạng thái Công khai."})
-        post.status = Post.Status.PUBLISHED
+        post.status = Post.Status.PUBLISH
         post.save(update_fields=["status", "updated_at"])
         logger.info(f"Post published by {request.user.username}: '{post.title}'")
         return Response({"message": "Đã đăng công khai bài viết.", "id": str(post.pk)})
