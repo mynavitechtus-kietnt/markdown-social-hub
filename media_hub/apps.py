@@ -2,5 +2,6 @@ from django.apps import AppConfig
 
 
 class MediaHubConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'media_hub'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "media_hub"
+    verbose_name = "Media"
